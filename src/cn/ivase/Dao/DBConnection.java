@@ -14,12 +14,24 @@ import cn.ivase.Model.ConfigKeys;
 import cn.ivase.Model.UsingProperties;
 import cn.ivase.Model.util;
 
-
+/**
+ *jdbc连接数据库内容 用于初始化插入表 
+ *  *代码结构比较混乱
+ * *自己看不懂了。。。就懒得重写了
+ *@Title DBConnection.java
+ *@description TODO
+ *@time 2018年12月24日 下午12:16:29
+ *@author FateVase
+ *@version 1.0
+ *
+ *
+*
+ */
 public class DBConnection {
 
 //	final private static String            MYSQL_URL     = "jdbc:mysql://localhost:3306/vase";	
 //	final private static String            MYSQLUSER     = "root";
-//	final private static String            PASSWORD      = "980122";	
+//	final private static String            PASSWORD      = "";	
 	private static       String			   CLASS_FORNAME = "/com.mysql.jdbc.Driver";
 	private 			 Statement         statement     = null;
 	private 			 ResultSet 	       resultset     = null;
@@ -57,8 +69,8 @@ public class DBConnection {
 		try{
 			resultset = statement.executeQuery(sql);
 			while(resultset.next()){
-				System.out.println("ResultSet get:"+resultset.getString(2));
-				out_msg += "ResultSet get:"+resultset.getString(2)+"\n";
+				System.out.println("ResultSet get:"+resultset.getString(1));
+				out_msg += "ResultSet get:"+resultset.getString(1)+"\n";
 			}
 		}catch(Exception e){
 			System.out.println("MysqlException:executeQuery error.");
@@ -144,13 +156,12 @@ public class DBConnection {
 			int data_col_num = all_data.getColumnCount();
 			System.out.println("data_col_num:"+data_col_num);
 
-			//锟斤拷取锟斤拷锟斤拷
 			while(rs.next()){
 				Map<String,String> data_map =new HashMap<String,String>();
 				System.out.println("Start for loop");
 				for(int i=1;i<=data_col_num;i++) {
 					data_map.put(all_data.getColumnName(i),rs.getString(i));
-					System.out.println("all_data:"+all_data.getColumnName(i)+":"+rs.getString(i));
+					System.out.println("all_data:"+all_data.getColumnName(i)+":"+data_map.get(all_data.getColumnName(i)));
 				}
 				data_list.add(data_map);
 			}

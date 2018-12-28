@@ -6,7 +6,7 @@ public class ConfigKeys {
 	public static final String SQLSERVER_REAL_PATH = "WEB-INF/database/sqlserver.properties";
 	public static final String GLOBAL_REAL_PATH = "WEB-INF/Global.properties";
 	public static final String MYSQL_SQL_PATH = "WEB-INF/database/mysql_table.sql";
-	
+
 	public static final String DATABASE_CONNECTION_URL = "database.connection.url";
 	public static final String DATABASE_CONNECTION_IMPLEMENTATION = "database.connection.implementation";
 	public static final String DATABASE_DRIVER_NAME = "database.driver.name";

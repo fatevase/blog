@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
 
@@ -49,4 +51,19 @@ public class util {
 		}
 		return readContent;
 	}
+	
+	public static boolean CheckSignState() {
+		 HttpServletRequest request = ServletActionContext.getRequest(); 
+		 HttpSession session = request.getSession(); 
+		boolean isLogin = false;
+		if(session.getAttribute("uid") != null && !"".equals(session.getAttribute("uid"))) {
+			if(session.getAttribute("username") != null && !"".equals(session.getAttribute("username"))) {
+				if(session.getAttribute("groups") != null && !"".equals(session.getAttribute("groups"))) {
+					isLogin = true;				
+				}
+			}
+		}
+		return isLogin;
+	}
+	
 }

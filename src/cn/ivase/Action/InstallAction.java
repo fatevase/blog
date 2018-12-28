@@ -39,6 +39,7 @@ public class InstallAction extends ActionSupport {
 				msg = "Select test Bad!\n";
 			}
 		}else {
+			System.out.println(this.database_type+"======\n"+this.host+"======\n"+this.port+"======\n"+this.username+"======\n"+this.password);
 			InitDB iDB = new InitDB(this.database_type);
 			msg = iDB.InitProperties(this.host,this.port,this.username,this.password);
 			msg += iDB.InstallDatabase(this.database_name);

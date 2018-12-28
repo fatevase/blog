@@ -4,13 +4,26 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.util.ArrayList;
-import java.util.List;
 
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.ResourceLoader;
+
+import cn.ivase.Action.BaseAction;
 import cn.ivase.Model.ConfigKeys;
 import cn.ivase.Model.UsingProperties;
 import cn.ivase.Model.util;
-
+/**
+ *  *初始化数据库
+ *@Title InitDB.java
+ *@description TODO
+ *@time 2018年12月24日 下午12:20:51
+ *@author FateVase
+ *@version 1.0
+ *
+ *
+*
+ */
 public class InitDB {
 	private static      String             filePath        = "";
 	private static      String             mysql_file_path = "";
@@ -76,13 +89,13 @@ public class InitDB {
 			Class.forName(connection_driver);
 			msg += "Database Driver Test Successfully!\n";
 		} catch(Exception e) {
-			msg += "Database Driver Test Successfully!\n";
+			msg += "Database Driver Test Bad!\n";
 			System.out.println("\n\n\tMy cn.ivase.Model.IniDB Exception:Driver error!\n\n"+e.toString());
 			return msg;
 		}
 		
 		try {
-			connection_url = GetMysqlConnectionUrl(upp, filePath);
+			connection_url = GetMysqlConnectionAllUrl(upp, filePath);
 			connection = DriverManager.getConnection(connection_url);
 			if(!connection.isClosed()) {
 				System.out.println("Succeeded connecting to the Database!");
@@ -91,7 +104,9 @@ public class InitDB {
 			}
 		} catch(Exception e) {
 			msg += "Connecting Database Error,Check Your SQL Login Name AND Password\n";
+			System.out.println("Connection:"+connection_url);
 			System.out.println("\n\n\tMy cn.ivase.Model.IniDB Exception:GetConnection error!\n\n"+e.toString());
+			
 			return msg;
 		}
 		System.out.println(msg);
@@ -135,9 +150,10 @@ public class InitDB {
 		
 		try {
 			connection_driver = upp.GetValueByKey(filePath, "database.connection.driver");
-			connection_url = GetMysqlConnectionUrl(upp,filePath);
+			connection_url = GetMysqlConnectionAllUrl(upp,filePath);
 			upp.WriteProperties(global_filePath, "database.connection.driver", connection_driver);
         	upp.WriteProperties(global_filePath, "database.connection.url", connection_url);
+        	
         	out_msg += "Install Global Properties Files Successfully!\n";
     	}catch(Exception e) {
     		out_msg += "Install Global Properties Files  Error!\n";
@@ -155,6 +171,11 @@ public class InitDB {
 			out_msg += "Connecting Database Error,Check Your Global Properties.\n";
 			return out_msg;
 		}
+		//TODO: reflash spring
+
+	    ResourceLoader resourceLoader = new DefaultResourceLoader();
+	    ReloadableResourceBundleMessageSource auto = new ReloadableResourceBundleMessageSource();
+		
 		out_msg += "Globall Properties Setting over!\nNext Stap Try Install Table...\n";
 		
         return out_msg;
@@ -177,12 +198,12 @@ public class InitDB {
 	}
 	
 	/**
-	 * GetMysqlConnectionUrl
+	 * GetMysqlConnectionAllUrl
 	 * @param upp
 	 * @param filePath
 	 * @return
 	 */
-private String GetMysqlConnectionUrl(UsingProperties upp,String filePath) {
+private String GetMysqlConnectionAllUrl(UsingProperties upp,String filePath) {
     	String url = null;
     	url = upp.GetValueByKey(filePath, "database.connection.head")+
     			upp.GetValueByKey(filePath, "database.connection.host")+
@@ -193,6 +214,24 @@ private String GetMysqlConnectionUrl(UsingProperties upp,String filePath) {
     			"&useSSL="+upp.GetValueByKey(filePath, "database.connection.useSSL");
     	return url;
     }
+	
+
+	/**
+	 * GetMysqlConnectionUrl
+	 * @param upp
+	 * @param filePath
+	 * @return
+	 */
+private String GetMysqlConnectionUrl(UsingProperties upp,String filePath) {
+	String url = null;
+	url = upp.GetValueByKey(filePath, "database.connection.head")+
+			upp.GetValueByKey(filePath, "database.connection.host")+
+			":"+upp.GetValueByKey(filePath, "database.connection.port")+
+			"/"+upp.GetValueByKey(filePath, "database.connection.dbname")+
+			"?useSSL="+upp.GetValueByKey(filePath, "database.connection.useSSL");
+	return url;
+}
+
 	/**
 	 * 
 	 * @param driver
@@ -254,5 +293,8 @@ public int RunSqlFile(String sql_file_path) {
     }
     return out_msg;
 }
+
+
+
 
 }

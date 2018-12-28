@@ -1,10 +1,111 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
-<package name="default" namespace="/" extends="struts-default">
+<package name="default" namespace="/" extends="struts-default,json-default">
 <action name="InstallAction" class="cn.ivase.Action.InstallAction">
-<result name="success">Admin/web-setting.jsp</result>
-<result name="input">Admin/web-setting.jsp</result>
+<result name="success">/Admin/web-setting.jsp</result>
+<result name="input">/Admin/web-setting.jsp</result>
+</action>
+<!-- 
+<action name="GetAllUsers" class="cn.ivase.Action.UsersAction" method="GetAllUsers">
+	<result name="success">/Admin/manage-users.jsp</result>
+</action>
+<action name="ChangeUser" class="cn.ivase.Action.UsersAction" method="ChangeUser">
+	<result name="success">/Admin/manage-users.jsp</result>
+</action>
+<action name="AddUser" class="cn.ivase.Action.UsersAction" method="AddUser">
+	<result name="success">/Admin/manage-users.jsp</result>
+</action>
+<action name="DeleteUser" class="cn.ivase.Action.UsersAction" method="DeleteUser">
+	<result name="success">/Admin/manage-users.jsp</result>
+</action>
+<action name="SearchUsers" class="cn.ivase.Action.UsersAction" method="SearchUsers">
+	<result name="success">/Admin/manage-users.jsp</result>
+</action>
+ -->
+ <action name="*" class="cn.ivase.Action.UsersAction" method="{1}">
+	<result name="success">/Admin/manage-users.jsp</result>
+</action>
+<action name="SignIn" class="cn.ivase.Action.SignAction" method="SignIn">
+	<result name="input">/Sign/sign-in.jsp</result>
+</action>
+<action name="SignUp" class="cn.ivase.Action.SignAction" method="SignUp">
+	<result name="success">/Sign/sign-in.jsp</result>
+	<result name="input">/Sign/sign-up.jsp</result>
+</action>
+<action name="SchoolUser" class="cn.ivase.Action.SignAction" method="AddSchoolUser">
+    <result name="success" type="json">
+         <param name="root">ActionOutPut</param>
+    </result>
+</action>
+
+<action name="ShowIndex" class="cn.ivase.Action.IndexAction" method="ShowIndex">
+    <result name="success" type="json">
+         <param name="root">all_index</param>
+    </result>
+</action>
+<action name="ShowPage" class="cn.ivase.Action.IndexAction" method="ShowPage">
+    <result name="success">/page.jsp</result>
+    <result name="input">/404.html</result>
+</action>
+<action name="PostComment" class="cn.ivase.Action.IndexAction" method="PostComment">
+    <result name="success" type="json">
+         <param name="root">errormsg</param>
+    </result>
+</action>
+<action name="SignOut" class="cn.ivase.Action.SignAction" method="SignOut">
+    <result name="success" type="json">
+        <param name="root">ActionOutPut</param>
+    </result>
+</action>
+<action name="ShowContents" class="cn.ivase.Action.ContentsAction" method="ShowContents">
+    <result name="success" type="json">
+        <param name="root">all_contents</param>
+    </result>
+</action>
+<action name="AddContent" class="cn.ivase.Action.ContentsAction" method="AddContent">
+    <result name="success" type="json">
+        <param name="root">ActionOutPut</param>
+    </result>
+</action>
+<action name="DeleteContent" class="cn.ivase.Action.ContentsAction" method="DeleteContent">
+    <result name="success" type="json">
+        <param name="root">ActionOutPut</param>
+    </result>
+</action>
+<action name="WritePrepare" class="cn.ivase.Action.ContentsAction" method="WritePrepare">
+    <result name="success" type="json">
+        <param name="root">contents</param>
+</result>
+</action>
+<action name="PostContent" class="cn.ivase.Action.ContentsAction" method="PostContent">
+    <result name="success" type="json">
+        <param name="root">ActionOutPut</param>
+    </result>
+</action>
+<action name="ShowBackendIndex" class="cn.ivase.Action.BackEndAction" method="ShowBackendIndex">
+    <result name="putcount" type="json">
+        <param name="root">ActionOutPut</param>
+    </result>
+    <result name="putessa" type="json">
+        <param name="root">all_contents</param>
+    </result>
+    <result name="putcomm" type="json">
+        <param name="root">all_comments</param>
+    </result>
+    <result name="error" >
+        /404.html
+    </result>
+</action>
+<action name="ShowTag" class="cn.ivase.Action.IndexAction" method="ShowTag">
+    <result name="success" type="json">
+        <param name="root">ActionOutPut</param>
+    </result>
+</action>
+<action name="SearchContents" class="cn.ivase.Action.ContentsAction" method="SearchContents">
+    <result name="success" type="json">
+        <param name="root">all_contents</param>
+    </result>
 </action>
 </package>
 </struts>    
