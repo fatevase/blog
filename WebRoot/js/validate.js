@@ -53,3 +53,25 @@ $('#sign-form')
 			on     : 'blur'
 		})
 	;
+
+$('#comment-form')
+.form({
+	fields : {
+				commentvalue: {
+					identifier : 'commentvalue',
+					rules      : [
+						{
+							type   : 'empty',
+							prompt : '评论不能为空'
+						},
+						{
+							type: 'regExp',
+							value: /^(([^\^\.<>%&',;=?$"':#@!~\]\[{}\\/`\|])*)$/i,
+							prompt : '禁止提交特殊字符'
+						}
+					]
+				}
+			},
+	on     : 'blur'
+})
+;

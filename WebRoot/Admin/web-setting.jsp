@@ -14,16 +14,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<title>后台管理</title>
 		<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
 	</head>
+		<s:if  test="#session.username==null || #session.uid == null || #session.username == '' 
+					|| #session.uid < 1 || #session.groups != 'admin'" >
+			<script>window.location.href="404.html";</script>
+        </s:if>
 	<body>
-	<div class="ui top stackable attached inverted menu">
+	<div class="ui top stackable attached inverted menu">        
 		<a class="item left">
 			<i class="sidebar icon"></i>
 			菜单
 		</a>
-		<a class="item right">
-			{username}
+		<a class="item right" id="user-name">
+			<s:property value="#session.username" />
 		</a>
-		<a class="item">
+		<a class="item" onclick="SignOut()">
 			<i class="sign out icon"></i>
 			登出
 		</a>
@@ -48,7 +52,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<a  class="active title">	
 					 管理 </a>
 					<div class="active content">
-					<a href="Admin/manage-users.jsp" class=" item">
+					<a href="GetAllUsers.action" class=" item">
 						用户管理
 					</a>
 					<a href="Admin/manage-text.jsp" class="item">
@@ -56,24 +60,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</a>
 					</div>
 				</div>
-				<a class="item">
+				<a href="Admin/web-setting.jsp" class="item">
 					<i class="setting icon"></i>
 					设置
 				</a>
 			</div>
 			
-		<div class="padded segment pusher">
-			<div class=" ui padded segment">
-					<h2 class="ui header">网站设置</h2>	
-					<div class="ui grid row">
-					 <div class="nine wide column"></div>
-					</div>
-		</div>
-			
 
 	
-		<div class="ui grid row">
-		<form style="margin-left:50px" class="ui form" action="InstallAction.action" method="post">
+		<div class="ui grid row" style="margin-top:50px">
+		<form style="margin-left:50px;" class="ui form" action="InstallAction.action" method="post">
 		    <p>
 		        数据库类型：<select name="database_type">
 		    		<option value="mysql" >Mysql 5.7</option>
@@ -93,13 +89,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    登陆名：<input name="username" type="text" value="root"/>
 		    </p>
 		    <p>
-		 数据库密码：<input name="password" type="text" value="zhu980122"/>
+		 数据库密码：<input name="password" type="password" value=""/>
 		 </p>
 		 <p ><input  class="ui green button" type="submit" value="提交"/></p>
 		    </form>
 		    <div>
 		    
-		    <a href="InstallAction.action?action=test">test databases</a>
+		    <a href="InstallAction.action?action=test">测试连接</a>
 		    <p>控制台输出</p>
 		    <div style="overflow :yes;overflow :auto;overflow-y :yes;overflow-y :auto;height:200px;width:400px;background:#1E90FF;color:#ffffff">
 		    

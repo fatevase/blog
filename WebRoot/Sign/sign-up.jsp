@@ -11,6 +11,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <base href="<%=basePath%>">
     
 		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 		<title>注册</title>
 		<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
 		<style type="text/css">
@@ -35,41 +37,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 				<h1 class="ui header">
 					<div class="content">
-						欢迎～
+					　<s:if test="#request.ErrorCode == -1">用户名‘${user.username}’已存在    </s:if>
+					<s:elseif test="#request.ErrorCode == -2">
+						　　登陆失败，请重新尝试
+					</s:elseif>
+					<s:else>
+						欢迎你~
+　					 </s:else>
 					</div>
 					<div class="sub header">注册你的账号</div>
 				</h1>
-				<form class="ui large form" id="sign-form">
+				<form class="ui large form" id="sign-form" action="SignUp.action" method="post">
 					<div class="ui stacked segment">		
 						<div class="field">
 							<div class="ui left icon input">
 								<i class="user icon"></i>
-								<input type="text" name="username" placeholder="用户名">
+								<input type="text" id="username" name="user.username" placeholder="用户名">
 							</div>
 						</div>
 						<div class="field">
 							<div class="ui left icon input">
 								<i class="mail icon"></i>
-								<input type="text" name="usermail" placeholder="邮箱">
+								<input type="text" id="usermail" name="user.mail" placeholder="邮箱">
 							</div>
 						</div>
 
 						<div class="field">
 							<div class="ui left icon input">
 								<i class="lock icon"></i>
-								<input type="password" name="password1" placeholder="密码">
+								<input type="password" id="password1" name="user.password" placeholder="密码">
 							</div>
 						</div>
 						<div class="field">
 							<div class="ui left icon input">
 								<i class="lock icon"></i>
-								<input type="password" name="password2" placeholder="再次密码">
+								<input type="password" id="password2" name="password2" placeholder="再次密码">
 							</div>
 						</div>
 						<input type="submit" class="ui secondary fluid button" value="注册">
 					</div>
 
-					<div class="ui error message"></div>
+					<div class="ui error message">
+					</div>
 
 				</form>
 
@@ -83,4 +92,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="js/jquery.min.js" charset="utf-8"></script>
 	<script src="js/semantic.min.js" charset="utf-8"></script>
 	<script src="js/validate.js" charset="utf-8"></script>
+	<script src="js/util.js" charset="utf-8"></script>
 </html>

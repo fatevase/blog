@@ -17,8 +17,9 @@ CREATE TABLE contents(
    text LONGTEXT,
    authorId INT DEFAULT 0,
    status VARCHAR(15) DEFAULT 'publish',
+   classify VARCHAR(20) DEFAULT 'unclassified',
    password VARCHAR(64) ,
-   commentsNum INT,
+   commentsNum INT DEFAULT 0,
    PRIMARY KEY (cid),
   CONSTRAINT UserCon_ID FOREIGN KEY (authorId) REFERENCES users_basic (uid)
 );
@@ -36,8 +37,10 @@ CREATE TABLE comments(
     CONSTRAINT UserCom_ID FOREIGN KEY (owenrId) REFERENCES users_basic (uid),
    CONSTRAINT ConCom_ID FOREIGN KEY (cid) REFERENCES contents (cid)
 );
+
   
-INSERT INTO users_basic(username,password,mail,groups) value('admin','admin123','vase@yahoo.com','admin'); 
-INSERT INTO users_basic(username,password,mail,groups) value('vase','fatevase','vase87@yahoo.com','admin'); 
-INSERT INTO contents(title,text,authorID) value('test','it is test content',1);
-INSERT INTO comments(cid,owenrId,text) value(1,1,'it is test comments');
+INSERT INTO users_basic(username,password,mail,groups,created) value('admin',md5('admin123'),'vase@yahoo.com','admin',1545148800); 
+INSERT INTO users_basic(username,password,mail,groups,created) value('vase',md5('fatevase'),'vase87@yahoo.com','admin', 1545148800);
+INSERT INTO users_basic(username,password,mail,groups,created) value('学生临时账号',md5('fatevase'),'学生账号别删','admin', 1545148800);  
+insert into contents(title,created,text,authorId,commentsNum) value('William Shakespeare',1545148800,'William Shakespeare was born in Stratford-upon-Avon, a small country town.',1,1);
+INSERT INTO comments(cid,owenrId,text,created) value(1,1,'William Shakespeare', 1545400777);
