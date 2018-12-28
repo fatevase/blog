@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'index.jsp' starting page</title>
+    <title>初始化数据库</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -43,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     登陆名：<input name="username" type="text" value="root"/>
     </p>
     <p>
- 数据库密码：<input name="password" type="text" value="zhu980122"/>
+ 数据库密码：<input name="password" type="password" value=""/>
  </p>
  <p><input type="submit" value="提交"/></p>
     </form>

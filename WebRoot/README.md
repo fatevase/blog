@@ -1,5 +1,4 @@
-# blog v1.2
-完成了基本功能
+# blog
 1.安装方法
 （1）安装Java JDK 1.6或Java JDK 1.8环境，并配置好环境变量。
 （2）安装tomcat-8.5.35并将源码放入webapps/ROOT目录下。
